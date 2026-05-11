@@ -200,7 +200,7 @@ class ActiveBlockManager(ManagerBase):
         return menu
 
     def menu_generator_subtitle_track(self):
-        if self.is_no_active_block or not self._ctx.active_block.subtitle_tracks:
+        if self.is_no_active_block:
             return {}
 
         menu = [
@@ -213,16 +213,17 @@ class ActiveBlockManager(ManagerBase):
             }
         ]
 
-        menu += [
-            {
-                "title": track.info,
-                "icon": "empty",
-                "func": ("active", "set_subtitle_track", track_id),
-                "check_if": ("is_active_param_set_to", "subtitle_track_id", track_id),
-                "show_if": "is_active_initialized",
-            }
-            for track_id, track in self._ctx.active_block.subtitle_tracks.items()
-        ]
+        if self._ctx.active_block.subtitle_tracks:
+            menu += [
+                {
+                    "title": track.info,
+                    "icon": "empty",
+                    "func": ("active", "set_subtitle_track", track_id),
+                    "check_if": ("is_active_param_set_to", "subtitle_track_id", track_id),
+                    "show_if": "is_active_initialized",
+                }
+                for track_id, track in self._ctx.active_block.subtitle_tracks.items()
+            ]
 
         return menu
 

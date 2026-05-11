@@ -92,11 +92,9 @@ class InstanceVLC:
         options = [
             "--quiet",
             "--no-disable-screensaver",
-            "--no-sub-autodetect-file",
             "--no-lua",
             "--no-osd",
             "--no-snapshot-preview",
-            "--no-spu",
             "--no-interact",
             "--no-stats",
             "--no-keyboard-events",
