@@ -127,6 +127,14 @@ class VideoFrameVLC(QWidget, metaclass=QABC):
     def cur_audio_track_id(self) -> int | None:
         return self.media.cur_audio_track_id
 
+    @property
+    def subtitle_tracks(self):
+        return self.media.subtitle_tracks
+
+    @property
+    def cur_subtitle_track_id(self) -> int | None:
+        return self.media.cur_subtitle_track_id
+
     @abstractmethod
     def driver_setup(self, vlc_options) -> VLCVideoDriver: ...
 
@@ -319,6 +327,11 @@ class VideoFrameVLC(QWidget, metaclass=QABC):
         self.media.cur_audio_track_id = track_id
 
         self.video_driver.set_audio_track(track_id)
+
+    def set_subtitle_track(self, track_id):
+        self.media.cur_subtitle_track_id = track_id
+
+        self.video_driver.set_subtitle_track(track_id)
 
     def set_video_track(self, track_id):
         self.media.cur_video_track_id = track_id

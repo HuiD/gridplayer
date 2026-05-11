@@ -498,6 +498,10 @@ class VlcPlayerBase(ABC):
         self._tracks_manager.set_video_track_id(track_id)
 
     @only_initialized_player
+    def set_subtitle_track(self, track_id):
+        self._tracks_manager.set_subtitle_track_id(track_id)
+
+    @only_initialized_player
     def set_audio_channel_mode(self, mode: AudioChannelMode):
         self._media_player.audio_set_channel(AUDIO_CHANNEL_MODE_MAP[mode])
 
@@ -666,13 +670,16 @@ class VlcPlayerBase(ABC):
 
         self._tracks_manager.set_video_track_id(self.media_input.video.video_track_id)
         self._tracks_manager.set_audio_track_id(self.media_input.video.audio_track_id)
+        self._tracks_manager.set_subtitle_track_id(self.media_input.video.subtitle_track_id)
 
         return Media(
             length=length,
             video_tracks=self._tracks_manager.video_tracks,
             audio_tracks=self._tracks_manager.audio_tracks,
+            subtitle_tracks=self._tracks_manager.subtitle_tracks,
             cur_video_track_id=self._tracks_manager.current_video_track_id,
             cur_audio_track_id=self._tracks_manager.current_audio_track_id,
+            cur_subtitle_track_id=self._tracks_manager.current_subtitle_track_id,
         )
 
     def _get_duration(self):

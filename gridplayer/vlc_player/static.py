@@ -82,14 +82,26 @@ class AudioTrack(MediaTrack):
 
 
 @dataclass
+class SubtitleTrack:
+    id: int
+    name: str
+
+    @property
+    def info(self):
+        return self.name
+
+
+@dataclass
 class Media:
     length: int
 
     video_tracks: dict[int, VideoTrack]
     audio_tracks: dict[int, AudioTrack]
+    subtitle_tracks: dict[int, SubtitleTrack]
 
     cur_audio_track_id: int | None = None
     cur_video_track_id: int | None = None
+    cur_subtitle_track_id: int | None = None
 
     @property
     def is_live(self) -> bool:
@@ -110,6 +122,12 @@ class Media:
         if self.cur_audio_track_id in NO_TRACK:
             return None
         return self.audio_tracks[self.cur_audio_track_id]
+
+    @property
+    def cur_subtitle_track(self):
+        if self.cur_subtitle_track_id in NO_TRACK:
+            return None
+        return self.subtitle_tracks[self.cur_subtitle_track_id]
 
 
 @dataclass

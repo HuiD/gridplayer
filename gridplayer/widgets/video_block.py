@@ -552,6 +552,10 @@ class VideoBlock(QWidget):
     def audio_tracks(self):
         return self.video_driver.audio_tracks
 
+    @property
+    def subtitle_tracks(self):
+        return self.video_driver.subtitle_tracks
+
     @only_initialized
     def set_audio_track(self, track_id):
         if track_id == DISABLED_TRACK and self.video_params.video_track_id in NO_TRACK:
@@ -573,6 +577,11 @@ class VideoBlock(QWidget):
 
         self.video_params.video_track_id = track_id
         self.video_driver.set_video_track(track_id)
+
+    @only_initialized
+    def set_subtitle_track(self, track_id):
+        self.video_params.subtitle_track_id = track_id
+        self.video_driver.set_subtitle_track(track_id)
 
     @only_initialized
     def set_audio_channel_mode(self, mode):
@@ -689,6 +698,7 @@ class VideoBlock(QWidget):
 
         self.set_video_track(snapshot.video_track_id)
         self.set_audio_track(snapshot.audio_track_id)
+        self.set_subtitle_track(snapshot.subtitle_track_id)
 
         self.set_audio_channel_mode(snapshot.audio_channel_mode)
 

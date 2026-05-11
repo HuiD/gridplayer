@@ -543,6 +543,12 @@ ACTIONS = MappingProxyType(
             "show_if": "is_active_initialized",
             "menu_generator": "menu_generator_audio_track",
         },
+        "Subtitle Track": {
+            "title": translate("Actions", "Subtitle Track"),
+            "icon": "track",
+            "show_if": "is_active_initialized",
+            "menu_generator": "menu_generator_subtitle_track",
+        },
         "Audio Mode - Original": {
             "title": translate("Audio Mode", "Original"),
             "icon": "empty",

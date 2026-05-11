@@ -1,7 +1,7 @@
 import logging
 
 from gridplayer.vlc_player import vlc
-from gridplayer.vlc_player.static import NO_TRACK, AudioTrack, VideoTrack
+from gridplayer.vlc_player.static import NO_TRACK, AudioTrack, VideoTrack, SubtitleTrack
 
 
 class TracksManager:
@@ -38,6 +38,20 @@ class TracksManager:
     @property
     def current_audio_track_id(self) -> int | None:
         return self.tracks_map.get(self._media_player.audio_get_track())
+
+    @property
+    def subtitle_tracks(self) -> dict[int, SubtitleTrack]:
+        tracks = self._media_player.video_get_spu_description()
+        if not tracks:
+            return {}
+        return {
+            t_id: SubtitleTrack(id=t_id, name=name.decode("utf-8") if isinstance(name, bytes) else name)
+            for t_id, name in tracks if t_id != -1
+        }
+
+    @property
+    def current_subtitle_track_id(self) -> int | None:
+        return self._media_player.video_get_spu()
 
     @property
     def tracks_map(self) -> dict[int, int]:
@@ -86,6 +100,13 @@ class TracksManager:
 
         self._log.debug(f"Set video track {track_id} [{real_track_id}]")
         self._media_player.video_set_track(real_track_id)
+
+    def set_subtitle_track_id(self, track_id) -> None:
+        if track_id is None:
+            return
+
+        self._log.debug(f"Set subtitle track {track_id}")
+        self._media_player.video_set_spu(track_id)
 
     def _get_real_track_id(self, track_id) -> int | None:
         if track_id == -1:

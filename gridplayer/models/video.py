@@ -56,6 +56,7 @@ class Video(BaseModel):
     # Tracks
     audio_track_id: int | None = None
     video_track_id: int | None = None
+    subtitle_track_id: int | None = None
 
     audio_channel_mode: AudioChannelMode = default_field("video_defaults/audio_mode")
 

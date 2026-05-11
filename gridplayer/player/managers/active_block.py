@@ -43,6 +43,7 @@ class ActiveBlockManager(ManagerBase):
             "menu_generator_stream_quality": self.menu_generator_stream_quality,
             "menu_generator_video_track": self.menu_generator_video_track,
             "menu_generator_audio_track": self.menu_generator_audio_track,
+            "menu_generator_subtitle_track": self.menu_generator_subtitle_track,
             "next_active": self.next_active,
             "previous_active": self.previous_active,
         }
@@ -194,6 +195,33 @@ class ActiveBlockManager(ManagerBase):
                 "show_if": "is_active_initialized",
             }
             for track_id, track in self._ctx.active_block.audio_tracks.items()
+        ]
+
+        return menu
+
+    def menu_generator_subtitle_track(self):
+        if self.is_no_active_block or not self._ctx.active_block.subtitle_tracks:
+            return {}
+
+        menu = [
+            {
+                "title": translate("Actions", "Disable Subtitles"),
+                "icon": "empty",
+                "func": ("active", "set_subtitle_track", -1),
+                "check_if": ("is_active_param_set_to", "subtitle_track_id", -1),
+                "show_if": "is_active_initialized",
+            }
+        ]
+
+        menu += [
+            {
+                "title": track.info,
+                "icon": "empty",
+                "func": ("active", "set_subtitle_track", track_id),
+                "check_if": ("is_active_param_set_to", "subtitle_track_id", track_id),
+                "show_if": "is_active_initialized",
+            }
+            for track_id, track in self._ctx.active_block.subtitle_tracks.items()
         ]
 
         return menu

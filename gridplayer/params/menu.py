@@ -34,6 +34,10 @@ SUBMENUS = MappingProxyType(
             "title": translate("Actions", "Audio Mode"),
             "icon": "stereo-mode",
         },
+        "Subtitle Track": {
+            "title": translate("Actions", "Subtitle Track"),
+            "icon": "track",
+        },
         "Add": {"title": translate("Actions", "Add"), "icon": "add"},
         "Playback": {"title": translate("Actions", "Playback"), "icon": "playback"},
         "Audio": {"title": translate("Actions", "Audio"), "icon": "audio"},
@@ -72,6 +76,7 @@ SECTIONS = MappingProxyType(
             (
                 "Video",
                 "Video Track",
+                "Subtitle Track",
                 (
                     "Zoom",
                     "Zoom In",
