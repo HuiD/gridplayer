@@ -30,6 +30,7 @@ information about the position, sound volume, loops, aspect ratio, etc.
 - Configurable grid layout
 - Easy swap videos with drag-n-drop
 - Playlist retains settings for each video
+- [TODO] Subtitle supports
 
 ## Translation
 
